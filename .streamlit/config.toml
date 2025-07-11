@@ -1,0 +1,10 @@
+[client]
+showSidebarNavigation = false
+
+[server]
+runOnSave = true
+headless = true
+
+# [theme]
+# backgroundColor = "#F4F6FF"
+# secondaryBackgroundColor = "#F3C623"
