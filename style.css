@@ -1,0 +1,117 @@
+/* Import font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Chau+Philomene+One');
+
+/* Ubah warna latar sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #3E3232;
+    padding: 20px;
+    /* border-right: 2px solid #d4cfc2; */
+}
+
+/* Judul sidebar */
+section[data-testid="stSidebar"] h1 {
+    font-family: 'Chau Philomene One', sans-serif;
+    color: #E8E8E8;
+    font-size: 35px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+
+/* Subheader sidebar */
+section[data-testid="stSidebar"] h3 {
+    font-style: italic;
+    color: #E8E8E8;
+    font-size: 16px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Gaya tombol login di sidebar */
+button[kind="secondary"][data-testid="stBaseButton-secondary"] {
+    color: #E8E8E8;
+    border: 1px solid;
+    border-color: #E8E8E8;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    transition: 0.3s ease;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+button[kind="secondary"][data-testid="stBaseButton-secondary"]:hover {
+    background-color: #dd9f76;
+    border-color: #dd9f76;
+    color: white;
+    cursor: pointer;
+}
+
+button[kind="secondary"][data-testid="stBaseButton-secondary"]:active {
+    opacity: 0.7;
+}
+
+/* Container radio di sidebar */
+section[data-testid="stSidebar"] .stRadio > div {
+    padding: 8px 0;
+}
+
+/* Sembunyikan lingkaran radio di sidebar */
+section[data-testid="stSidebar"] label[data-baseweb="radio"] *:not(:last-child) {
+    display: none !important;
+}
+
+/* Teks radio default */
+section[data-testid="stSidebar"] label[data-baseweb="radio"] [data-testid="stMarkdownContainer"] {
+    color: #E8E8E8 !important;
+    font-weight: 500;
+    font-size: 20px;
+    border-radius: 6px;
+    transition: color 0.2s ease;
+}
+
+/* Radio aktif */
+section[data-testid="stSidebar"] [data-testid="stRadio"] input:checked + div [data-testid="stMarkdownContainer"] {
+    color: #3E3232 !important;
+    font-weight: bold;
+    border: 4px solid #E8E8E8;
+    background: #E8E8E8;
+}
+
+/* Divider di sidebar jika ada */
+section[data-testid="stSidebar"] hr {
+    border: none;
+    border-top: 2px solid #E8E8E8;
+    margin: 16px 0;
+}
+
+/* Ubah tampilan tombol collapsed sidebar */
+button[data-testid="stBaseButton-headerNoPadding"] {
+    background-color: #E8E8E8;   /* latar tombol */
+    color: #3E3232;              /* warna ikon ☰ */
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Footer */
+.sidebar-footer {
+    font-size: 12px;
+    color: #888;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.sidebar-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px; /* atau sesuai kebutuhan */
+}
