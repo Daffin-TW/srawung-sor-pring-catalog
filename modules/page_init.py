@@ -4,7 +4,7 @@ import streamlit as st
 
 def init_configuration(sidebar: str = 'auto'):
     st.set_page_config(
-        page_title='Srawung Sor Pring Katalog UMKM',
+        page_title='Katalog Srawung Sor Pring',
         page_icon='src/img/logo_arundiswara.png',
         initial_sidebar_state=sidebar,
         layout='wide',
@@ -25,7 +25,20 @@ def init_sidebar():
             'src/img/srawung_sor_pring_logo.png', use_container_width=True,
         )
         
-        page = st.radio("Navigasi", ["Beranda", "Katalog", "Tentang Kami"])
+        st.divider()
+
+        if not ss.get('navigation', ''):
+            ss.navigation = '🏠︎ Beranda'
+
+        ss.navigation = st.radio(
+            'navigasi',
+            [
+                "🏠︎ Beranda", 
+                "🛒 Katalog", 
+                "📌 Tentang Kami"
+            ],
+            label_visibility='collapsed',
+        )
 
         st.markdown(
             '<div class="sidebar-footer">© 2025 KKN 139 Arundiswara</div>',

@@ -6,6 +6,9 @@ import streamlit as st
 # Custom package imports
 from modules import init_configuration, init_sidebar, init_style
 
+
 init_configuration()
 init_sidebar()
 init_style()
+
+print(ss.get('navigation', ''))
