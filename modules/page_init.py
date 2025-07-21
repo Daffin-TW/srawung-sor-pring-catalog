@@ -14,6 +14,13 @@ def init_style():
     with open( "style.css" ) as css:
         st.markdown( f'<style>{css.read()}</style>', unsafe_allow_html=True)
 
+def init_pages():
+    return {
+        '🏠︎ Beranda': 'main.py',
+        '🛒 Katalog': 'pages/catalog.py',
+        '📌 Tentang Kami': 'pages/about_us.py'
+    }
+
 def init_sidebar():
     with st.sidebar:
         st.title("Srawung Sor Pring")
@@ -27,20 +34,23 @@ def init_sidebar():
         
         st.divider()
 
+        pages = init_pages()
+
         if not ss.get('navigation', ''):
-            ss.navigation = '🏠︎ Beranda'
+            ss.navigation = pages.keys()[0]
 
         ss.navigation = st.radio(
-            'navigasi',
-            [
-                "🏠︎ Beranda", 
-                "🛒 Katalog", 
-                "📌 Tentang Kami"
-            ],
+            'navigasi', pages.keys(),
             label_visibility='collapsed',
         )
-
+        
         st.markdown(
             '<div class="sidebar-footer">© 2025 KKN 139 Arundiswara</div>',
             unsafe_allow_html=True
         )
+
+def init_navigation(current_page: str):
+    pages = init_pages()
+
+    if ss.get('navigation', '') != current_page:
+        st.switch_page(pages[ss.navigation])
