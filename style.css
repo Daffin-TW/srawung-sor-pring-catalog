@@ -29,6 +29,32 @@ section[data-testid="stSidebar"] h3 {
     text-align: center;
 }
 
+/* Gaya tombol login di sidebar */
+button[kind="secondary"][data-testid="stBaseButton-secondary"] {
+    color: #E8E8E8;
+    border: 1px solid;
+    border-color: #E8E8E8;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    transition: 0.3s ease;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+button[kind="secondary"][data-testid="stBaseButton-secondary"]:hover {
+    background-color: #dd9f76;
+    border-color: #dd9f76;
+    color: white;
+    cursor: pointer;
+}
+
+button[kind="secondary"][data-testid="stBaseButton-secondary"]:active {
+    opacity: 0.7;
+}
+
 /* Container radio di sidebar */
 section[data-testid="stSidebar"] .stRadio > div {
     padding: 8px 0;

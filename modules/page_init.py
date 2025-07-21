@@ -33,17 +33,22 @@ def init_sidebar():
         )
         
         st.divider()
+        
+        if st.button("Login", key="login_button", use_container_width=True):
+            st.switch_page('pages/login.py')
+
+        st.divider()
 
         pages = init_pages()
 
         if not ss.get('navigation', ''):
-            ss.navigation = pages.keys()[0]
+            ss.navigation = list(pages.keys())[0]
 
         ss.navigation = st.radio(
             'navigasi', pages.keys(),
             label_visibility='collapsed',
         )
-        
+
         st.markdown(
             '<div class="sidebar-footer">© 2025 KKN 139 Arundiswara</div>',
             unsafe_allow_html=True

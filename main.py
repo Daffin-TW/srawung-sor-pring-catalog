@@ -81,6 +81,23 @@ for i, umkm in enumerate(umkm_terpilih):
 
 st.divider()
 
+# ====================
+# Petunjuk Belanja
+# ====================
+
+st.markdown("### 📌 Petunjuk Belanja")
+st.markdown("""
+<ol style='font-size: 16px; padding-left: 20px; color: #444;'>
+  <li>Pengunjung yang akan belanja wajib menggunakan <b>koin Srawung Sor Pring</b> yang dapat ditukar di loket informasi.</li>
+  <li>Uang koin yang disediakan terdiri dari pecahan <b>2K, 3K, 5K, 10K, dan 20K</b>.</li>
+  <li>Pengunjung yang membeli makanan untuk dibawa pulang diharapkan membawa <b>tas belanja sendiri</b>.</li>
+  <li>Jika masih memiliki sisa koin, dapat ditukar kembali di loket informasi.</li>
+  <li>Jaga kebersihan area <b>Srawung Sor Pring</b> dengan membuang sampah pada tempat yang disediakan.</li>
+</ol>
+""", unsafe_allow_html=True)
+
+st.divider()
+
 # Footer
 st.markdown("""
 <div style='text-align: center; font-size: 14px; color: #aaa; padding: 20px 0;'>
