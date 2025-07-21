@@ -1,0 +1,63 @@
+/* Import font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Chau+Philomene+One');
+
+/* Ubah warna latar sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #3E3232;
+    padding: 20px;
+    /* border-right: 2px solid #d4cfc2; */
+}
+
+/* Judul sidebar */
+section[data-testid="stSidebar"] h1 {
+    font-family: 'Chau Philomene One', sans-serif;
+    color: #E8E8E8;
+    font-size: 35px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+
+/* Subheader sidebar */
+section[data-testid="stSidebar"] h3 {
+    font-style: italic;
+    color: #E8E8E8;
+    font-size: 16px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Elemen radio button */
+section[data-testid="stSidebar"] .stRadio > div {
+    background-color: #ffffff;
+    padding: 8px;
+    border-radius: 10px;
+}
+
+/* Ubah tampilan tombol collapsed sidebar */
+button[data-testid="stBaseButton-headerNoPadding"] {
+    background-color: #E8E8E8;   /* latar tombol */
+    color: #3E3232;              /* warna ikon ☰ */
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Footer */
+.sidebar-footer {
+    font-size: 12px;
+    color: #888;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.sidebar-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px; /* atau sesuai kebutuhan */
+}

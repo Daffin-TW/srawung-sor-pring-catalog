@@ -1,0 +1,1 @@
+from .page_init import init_configuration, init_sidebar, init_style

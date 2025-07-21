@@ -5,6 +5,7 @@ showSidebarNavigation = false
 runOnSave = true
 headless = true
 
-# [theme]
+[theme]
+base="light"
 # backgroundColor = "#F4F6FF"
 # secondaryBackgroundColor = "#F3C623"
