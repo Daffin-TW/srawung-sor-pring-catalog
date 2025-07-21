@@ -47,6 +47,6 @@ st.markdown("""
 st.markdown("""
 <hr>
 <div id="about-footer">
-    <p>© 2025 Tim KKN Arundiswara 139 | Universitas Gadjah Mada</p>
+    <p>© 2025 Tim KKN Arundiswara 139</p>
 </div>
 """, unsafe_allow_html=True)
