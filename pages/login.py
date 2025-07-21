@@ -1,6 +1,10 @@
-from modules import page_init
+# Streamlit imports
 from streamlit import session_state as ss
 import streamlit as st
+
+# Custom package imports
+from modules import page_init
+
 
 # Initial
 current_page = 'login'

@@ -40,12 +40,14 @@ def init_sidebar():
         st.divider()
 
         pages = init_pages()
+        pages_list = list(pages.keys())
 
         if not ss.get('navigation', ''):
-            ss.navigation = list(pages.keys())[0]
+            ss.navigation = pages_list[0]
 
         ss.navigation = st.radio(
             'navigasi', pages.keys(),
+            index=pages_list.index(ss.navigation),
             label_visibility='collapsed',
         )
 

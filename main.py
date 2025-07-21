@@ -2,21 +2,19 @@
 from streamlit import session_state as ss
 from streamlit import secrets as sc
 import streamlit as st
-import random
 
 # Custom package imports
-from modules import (
-    init_configuration, init_sidebar, init_style, init_navigation
-)
+from modules import page_init
+import random
 
 
 # Initial
 current_page = '🏠︎ Beranda'
 
-init_configuration()
-init_sidebar()
-init_style()
-init_navigation(current_page)
+page_init.init_configuration()
+page_init.init_sidebar()
+page_init.init_style()
+page_init.init_navigation(current_page)
 
 # ===== Dummy Data UMKM =====
 umkm_data = [
