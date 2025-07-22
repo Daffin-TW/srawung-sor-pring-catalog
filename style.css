@@ -115,3 +115,39 @@ button[data-testid="stBaseButton-headerNoPadding"] {
     margin-right: auto;
     width: 150px; /* atau sesuai kebutuhan */
 }
+
+/* ==== LOGIN HEADER ==== */
+.login-header {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.login-header h1 {
+    font-size: 32px;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.login-header p {
+    font-size: 15px;
+    color: #000000;
+}
+
+/* ==== REGISTER HEADER ==== */
+.register-header {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.register-header h1 {
+    font-size: 32px;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.register-header p {
+    font-size: 15px;
+    color: #000000;
+}
