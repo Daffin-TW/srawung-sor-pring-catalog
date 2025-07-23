@@ -2,12 +2,12 @@ from streamlit import session_state as ss
 import streamlit as st
 
 
-def init_configuration(sidebar: str = 'auto'):
+def init_configuration(sidebar: str = 'auto', layout: str = 'wide'):
     st.set_page_config(
         page_title='Katalog Srawung Sor Pring',
         page_icon='src/img/logo_arundiswara.png',
         initial_sidebar_state=sidebar,
-        layout='wide',
+        layout=layout,
     )
 
 def init_style():

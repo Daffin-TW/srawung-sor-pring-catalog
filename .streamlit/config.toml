@@ -4,6 +4,7 @@ showSidebarNavigation = false
 [server]
 runOnSave = true
 headless = true
+maxUploadSize = 10
 
 [theme]
 base="light"

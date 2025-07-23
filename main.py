@@ -5,6 +5,7 @@ import streamlit as st
 
 # Custom package imports
 from modules import page_init
+import pandas as pd
 import random
 
 
@@ -34,13 +35,25 @@ st.markdown("<h1 style='text-align: center;'>🌿 Srawung Sor Pring</h1>", unsaf
 st.markdown("<p style='text-align: center; font-size: 18px;'>Platform digital untuk menjelajahi UMKM lokal di Taman Harmoni</p>", unsafe_allow_html=True)
 st.divider()
 
-# Denah (placeholder)
-st.markdown("### 🗺️ Denah Lokasi")
-st.markdown("""
-<div style='width: 100%; height: 200px; background-color: #e8e8e8; border-radius: 10px; display: flex; align-items: center; justify-content: center;'>
-    <p style='color: #555;'>[Placeholder Denah Lokasi]</p>
-</div>
-""", unsafe_allow_html=True)
+plan_col1, plan_col2 = st.columns([1, 2])
+
+# Denah
+with plan_col1:
+    st.markdown("### 🗺️ Denah Lokasi")
+    st.image('src/img/site_plan.png', use_container_width=10)
+
+# Petunjuk Belanja
+with plan_col2:
+    st.markdown("### 📌 Petunjuk Belanja")
+    st.markdown("""
+    <ol style='font-size: 16px; padding-left: 20px; color: #444;'>
+    <li>Pengunjung yang akan belanja wajib menggunakan <b>koin Srawung Sor Pring</b> yang dapat ditukar di loket informasi.</li>
+    <li>Uang koin yang disediakan terdiri dari pecahan <b>2K, 3K, 5K, 10K, dan 20K</b>.</li>
+    <li>Setiap pengunjung yang ingin membawa pulang makanan dan minuman <b>tersedia tas belanja berbayar</b>.</li>
+    <li>Jika masih memiliki sisa koin, dapat ditukar kembali di loket informasi.</li>
+    <li>Jaga kebersihan area <b>Srawung Sor Pring</b> dengan membuang sampah pada tempat yang disediakan.</li>
+    </ol>
+    """, unsafe_allow_html=True)
 
 st.divider()
 
@@ -49,50 +62,57 @@ st.markdown("### 🤝 Apa itu Srawung Sor Pring?")
 col1, col2 = st.columns([2, 1])
 with col1:
     st.markdown("""
-    <p style='font-size: 16px; text-align: justify;'>
-    <b>Srawung Sor Pring</b> adalah kumpulan UMKM yang tumbuh di bawah rindangnya taman bambu di Taman Harmoni. 
-    Melalui website ini, pengunjung dapat dengan mudah melihat daftar menu, lokasi, serta informasi terkini dari UMKM yang tersedia.
-    </p>
+        <p>
+        <strong>Srawung Sor Pring</strong> adalah sebuah inisiatif yang menghadirkan beragam pelaku Usaha Mikro, Kecil, dan Menengah (UMKM) dalam satu ruang terbuka yang asri.
+        </p>
+
+        <p>
+        Melalui website ini, pengunjung dapat dengan mudah:
+        <ul>
+            <li>Menjelajahi berbagai <strong>menu dan produk</strong> yang ditawarkan oleh UMKM,</li>
+            <li>Menemukan informasi lengkap seperti <strong>lokasi, jadwal shift, dan jenis usaha</strong>,</li>
+            <li>Serta melihat <strong>kabar dan aktivitas terbaru</strong> dari komunitas Srawung Sor Pring.</li>
+        </ul>
+        </p>
+
+        <p>
+        Selain berfungsi sebagai katalog digital, website ini juga menjadi jembatan antara UMKM dan pengunjung, 
+        mempermudah transaksi, memperluas jangkauan promosi, dan menciptakan pengalaman berbelanja yang lebih terarah dan menyenangkan.
+        </p>
     """, unsafe_allow_html=True)
 
 with col2:
-    st.markdown("""
-    <div style='width: 100%; height: 150px; background-color: #d4d4d4; border-radius: 10px; display: flex; align-items: center; justify-content: center;'>
-        <p style='color: #555;'>[Ilustrasi Srawung]</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.image('src/img/taman_harmoni.jpg', use_container_width=10)
 
 st.divider()
 
 # UMKM Pilihan Hari Ini
-st.markdown("### 🌟 UMKM Pilihan Hari Ini")
+# Load data
+df = pd.read_csv("src/data/umkm.csv", delimiter=';')
 
+# Ambil UMKM secara acak
+sample_umkm = df.sample(n=min(3, len(df)))
+
+# Tampilkan judul mini katalog
+st.markdown("### 🛍️ UMKM Pilihan Hari Ini!")
+
+# Tampilkan 3 kolom
 cols = st.columns(3)
-for i, umkm in enumerate(umkm_terpilih):
-    with cols[i]:
+
+index = 0
+for i, row in sample_umkm.iterrows():
+    col = cols[index]
+    index += 1
+
+    with col:
+        umkm_anchor = row['nama_umkm'].replace(" ", "-")
         st.markdown(f"""
-        <div style='background-color: #f2f2f2; padding: 12px; border-radius: 10px; min-height: 120px;'>
-            <h4 style='margin-bottom: 5px;'>{umkm['nama']}</h4>
-            <p style='font-size: 14px; color: #555;'>{umkm['deskripsi']}</p>
+        <div class="umkm-card">
+            <iframe src="{row['logo']}" class="umkm-logo" allow="autoplay"></iframe>
+            <h4>{row['nama_umkm']}</h4>
+            <p style="font-size: 13px;"><i>{row['jenis_umkm']}</i> · Shift {row['shift']}</p>
         </div>
         """, unsafe_allow_html=True)
-
-st.divider()
-
-# ====================
-# Petunjuk Belanja
-# ====================
-
-st.markdown("### 📌 Petunjuk Belanja")
-st.markdown("""
-<ol style='font-size: 16px; padding-left: 20px; color: #444;'>
-  <li>Pengunjung yang akan belanja wajib menggunakan <b>koin Srawung Sor Pring</b> yang dapat ditukar di loket informasi.</li>
-  <li>Uang koin yang disediakan terdiri dari pecahan <b>2K, 3K, 5K, 10K, dan 20K</b>.</li>
-  <li>Pengunjung yang membeli makanan untuk dibawa pulang diharapkan membawa <b>tas belanja sendiri</b>.</li>
-  <li>Jika masih memiliki sisa koin, dapat ditukar kembali di loket informasi.</li>
-  <li>Jaga kebersihan area <b>Srawung Sor Pring</b> dengan membuang sampah pada tempat yang disediakan.</li>
-</ol>
-""", unsafe_allow_html=True)
 
 st.divider()
 

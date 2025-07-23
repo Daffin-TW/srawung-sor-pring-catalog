@@ -9,7 +9,7 @@ from modules import page_init
 # Initial
 current_page = 'login'
 
-page_init.init_configuration()
+page_init.init_configuration(layout='centered')
 page_init.init_style()
 
 with st.sidebar:
@@ -33,6 +33,15 @@ with st.sidebar:
         '<div class="sidebar-footer">© 2025 KKN 139 Arundiswara</div>',
         unsafe_allow_html=True
     )
+
+# ==== Header Login ====
+st.markdown("""
+<div class="login-header">
+    <h1>🔐 Login Akun UMKM</h1>
+    <p>Masuk untuk mengelola menu UMKM Anda di Srawung Sor Pring.</p>
+</div>
+""", unsafe_allow_html=True)
+
 
 with st.form("login_form", clear_on_submit=False):
     username = st.text_input("Username")

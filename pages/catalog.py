@@ -5,37 +5,52 @@ import streamlit as st
 
 # Custom package imports
 from modules import page_init
+import pandas as pd
 
 # Initial
 current_page = '🛒 Katalog'
 
-page_init.init_configuration()
+page_init.init_configuration(layout='centered')
 page_init.init_sidebar()
 page_init.init_style()
 page_init.init_navigation(current_page)
 
-# ==== Header ====
-st.markdown("<div id='katalog-header'><h1>📦 Katalog UMKM</h1></div>", unsafe_allow_html=True)
-st.markdown("<p id='katalog-sub'>Temukan menu terbaik dari UMKM yang ada di Srawung Sor Pring.</p>", unsafe_allow_html=True)
 
-# ==== Pilihan UMKM dan Tombol ====
-st.markdown("<div id='katalog-controls'>", unsafe_allow_html=True)
+# Load data
+umkm_df = pd.read_csv("src/data/umkm.csv", delimiter=';')
 
-umkm_list = ["Warung Mbah Darmo", "Es Dawet Bu Sri", "Nasi Bakar Kang Rudi", "Tahu Crispy Mbak Ita"]
-selected_umkm = st.selectbox("Pilih UMKM", umkm_list, index=0)
-
-col1, col2 = st.columns([3, 1])
-with col1:
-    search_term = st.text_input("Cari menu atau produk", placeholder="Contoh: es dawet, nasi bakar...")
-with col2:
-    search_clicked = st.button("🔍 Cari")
-
-st.markdown("</div>", unsafe_allow_html=True)
-
-# ==== Footer ====
+# === Header ===
 st.markdown("""
-<hr>
-<div id='katalog-footer'>
-    <p>© 2025 KKN Arundiswara 139 — Srawung Sor Pring</p>
+<div class="katalog-header">
+    <h1>📦 Katalog UMKM</h1>
+    <p>Jelajahi berbagai produk menarik dari UMKM di Srawung Sor Pring!</p>
 </div>
 """, unsafe_allow_html=True)
+
+# === Filter Search ===
+search = st.text_input("🔍 Cari UMKM atau produk...")
+
+# === Tampilkan UMKM ===
+for _, row in umkm_df.iterrows():
+    umkm_nama = row['nama_umkm']
+    
+    # Filter jika tidak sesuai search
+    if search and search.lower() not in umkm_nama.lower():
+        continue
+
+    st.markdown(f"""
+    <div class="umkm-card">
+        <div class="umkm-info">
+            <iframe src="{row['logo']}" class="umkm-logo" allow="autoplay"></iframe>
+            <div>
+                <h3>{row['nama_umkm']}</h3>
+                <p><i>{row['jenis_umkm']}</i> · Shift {row['shift']}</p>
+                <p>{row['deskripsi_umkm']}</p>
+                <p><b>Kontak:</b> {row['notelp']} · IG: @{row['instagram']}</p>
+                <a href="#{umkm_nama.replace(' ', '-')}" class="lihat-produk-btn">🔎 Lihat Produk</a>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
