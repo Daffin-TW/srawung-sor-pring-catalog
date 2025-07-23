@@ -70,6 +70,8 @@ section[data-testid="stSidebar"] label[data-baseweb="radio"] [data-testid="stMar
     color: #E8E8E8 !important;
     font-weight: 500;
     font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     border-radius: 6px;
     transition: color 0.2s ease;
 }
@@ -150,4 +152,38 @@ button[data-testid="stBaseButton-headerNoPadding"] {
 .register-header p {
     font-size: 15px;
     color: #000000;
+}
+
+/* === HEADER === */
+.katalog-header {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.katalog-header h1 {
+    font-size: 32px;
+    color: #000000;
+}
+.katalog-header p {
+    font-size: 16px;
+    color: #000000;
+}
+
+/* === UMKM Card === */
+.umkm-card {
+    background-color: #E8E8E8;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.umkm-info {
+    display: flex;
+    gap: 20px;
+}
+.umkm-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
 }
