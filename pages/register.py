@@ -3,7 +3,7 @@ from streamlit import session_state as ss
 import streamlit as st
 
 # Custom package imports
-from modules import page_init
+from modules import page_init, umkm_registration, fetch_data
 
 
 # Initial
@@ -45,22 +45,29 @@ st.markdown("""
 # ==== Form Registrasi ====
 with st.form("register_form", clear_on_submit=False):
     st.subheader("📧 Informasi Akun")
-    email = st.text_input("Email")
-    username = st.text_input("Username")
-    password = st.text_input("Password", type="password")
+    email = st.text_input("Email", max_chars=100)
+    username = st.text_input("Username", max_chars=15).lower()
+    username = username.replace(' ', '')
+    st.write('*username tanpa spasi dan menggunakan huruf kecil')
+    password = st.text_input("Password", type="password", max_chars=100)
 
     st.subheader("🏪 Informasi UMKM")
-    nama_umkm = st.text_input("Nama UMKM")
+    nama_umkm = st.text_input("Nama UMKM", max_chars=50)
     logo_umkm = st.file_uploader("Logo UMKM (opsional)", type=["png", "jpg", "jpeg"])
     tipe_umkm = st.selectbox("Tipe UMKM", ["Makanan", "Minuman", "Pakaian", "Kerajinan", "Lainnya"])
-    deskripsi = st.text_area("Deskripsi Singkat UMKM", max_chars=300)
+    deskripsi = st.text_area("Deskripsi Singkat UMKM", max_chars=512)
 
     st.subheader("📞 Kontak UMKM")
-    nama_pemilik = st.text_input("Nama Pemilik")
-    instagram = st.text_input("Instagram (opsional)")
-    no_telepon = st.text_input("Nomor Telepon")
+    nama_pemilik = st.text_input("Nama Pemilik", max_chars=100)
+    instagram = st.text_input("Instagram (opsional)", max_chars=50)
+    no_telepon = st.text_input("Nomor Telepon", max_chars=15)
 
     submit = st.form_submit_button("Daftar Sekarang")
+
+    data = (
+        username, email, password, nama_umkm, logo_umkm, tipe_umkm,
+        deskripsi, nama_pemilik, instagram, no_telepon, '0'
+    )
 
     condition = all([
         email, username, password, nama_umkm, tipe_umkm,
@@ -68,13 +75,26 @@ with st.form("register_form", clear_on_submit=False):
     ])
 
     if submit:
-        if condition:
-            msg = 'Registrasi berhasil! Silakan tunggu verifikasi admin'
-            st.success(msg)
-            st.toast(msg,  icon='✅')
-            # Di sini bisa ditambahkan penyimpanan data ke database / file
+        umkm_cred = fetch_data('umkm_credentials')
+
+        if username in umkm_cred.index or email in umkm_cred.email:
+            msg = 'Registrasi gagal, email/username telah digunakan!'
+            st.error(msg)
+            st.toast(msg, icon='⚠️')
+
+        elif condition:
+            if umkm_registration(data):
+                msg = 'Registrasi berhasil! Silakan tunggu verifikasi admin'
+                st.success(msg)
+                st.toast(msg,  icon='✅')
+            
+            else:
+                msg = 'Registrasi gagal, mohon persingkat beberapa form!'
+                st.error(msg)
+                st.toast(msg, icon='⚠️')
+
         else:
             msg = 'Registrasi gagal, tolong isi form yang masih kosong!'
             st.error(msg)
-            st.toast(msg,  icon='⚠️')
+            st.toast(msg, icon='⚠️')
     

@@ -30,7 +30,7 @@ section[data-testid="stSidebar"] h3 {
 }
 
 /* Gaya tombol login di sidebar */
-button[kind="secondary"][data-testid="stBaseButton-secondary"] {
+section[data-testid="stSidebar"] button[kind="secondary"][data-testid="stBaseButton-secondary"] {
     color: #E8E8E8;
     border: 1px solid;
     border-color: #E8E8E8;
@@ -44,14 +44,14 @@ button[kind="secondary"][data-testid="stBaseButton-secondary"] {
     margin-bottom: 5px;
 }
 
-button[kind="secondary"][data-testid="stBaseButton-secondary"]:hover {
+section[data-testid="stSidebar"] button[kind="secondary"][data-testid="stBaseButton-secondary"]:hover {
     background-color: #dd9f76;
     border-color: #dd9f76;
     color: white;
     cursor: pointer;
 }
 
-button[kind="secondary"][data-testid="stBaseButton-secondary"]:active {
+section[data-testid="stSidebar"] button[kind="secondary"][data-testid="stBaseButton-secondary"]:active {
     opacity: 0.7;
 }
 
@@ -186,4 +186,30 @@ button[data-testid="stBaseButton-headerNoPadding"] {
     height: 80px;
     object-fit: cover;
     border-radius: 10px;
+}
+
+/* Ubah tampilan tombol admin */
+button[kind="secondary"][data-testid="stBaseButton-secondary"] {
+    color: #3E3232;
+    border: 1px solid;
+    border-color: #E8E8E8;
+    background-color: #dd9f76;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    transition: 0.3s ease;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+button[kind="secondary"][data-testid="stBaseButton-secondary"]:hover {
+    background-color: #3E3232;
+    border-color: #dd9f76;
+    color: #E8E8E8;
+    cursor: pointer;
+}
+
+button[kind="secondary"][data-testid="stBaseButton-secondary"]:active {
+    opacity: 0.7;
 }
