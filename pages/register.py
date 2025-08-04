@@ -66,7 +66,7 @@ with st.form("register_form", clear_on_submit=False):
 
     data = (
         username, email, password, nama_umkm, logo_umkm, tipe_umkm,
-        deskripsi, nama_pemilik, instagram, no_telepon, '0'
+        deskripsi, nama_pemilik, instagram, no_telepon
     )
 
     condition = all([
@@ -87,6 +87,7 @@ with st.form("register_form", clear_on_submit=False):
                 msg = 'Registrasi berhasil! Silakan tunggu verifikasi admin'
                 st.success(msg)
                 st.toast(msg,  icon='✅')
+                st.switch_page('pages/registered.py')
             
             else:
                 msg = 'Registrasi gagal, mohon persingkat beberapa form!'

@@ -58,7 +58,7 @@ with st.form("login_form", clear_on_submit=True):
             cred_pass = df_cred.loc[username].password
             
             if password == cred_pass:
-                ss.admin_state = True
+                ss.admin_state = username
                 st.switch_page('pages/admin.py')
         
             else:

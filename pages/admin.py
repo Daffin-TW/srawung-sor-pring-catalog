@@ -4,8 +4,11 @@ from streamlit import secrets as sc
 import streamlit as st
 
 # Custom package imports
-from modules import page_init, admin_state, fetch_data, umkm_verification
+from modules import (
+    page_init, admin_state, fetch_data, umkm_verification, umkm_status_change
+)
 import pandas as pd
+import numpy as np
 
 
 @st.dialog('Apakah anda yakin?', width='large')
@@ -16,7 +19,9 @@ def ver_decision(username: str, verified: bool):
         col1, col2 = st.columns(2)
 
         if col1.button('Verifikasi', use_container_width=True):
-            umkm_verification(username, status=True)
+            result = umkm_verification(username, status=True)
+            # print(result)
+
             st.cache_data.clear()
             st.rerun()
 
@@ -76,17 +81,17 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-st.write('### Daftar Verifikasi Data UMKM')
+st.write('### 🔏 Daftar Verifikasi Data UMKM')
 
-df_umkm = fetch_data('umkm_unverified')
+df_umkm_unver = fetch_data('umkm_unverified')
 
-if not len(df_umkm):
+if not len(df_umkm_unver):
     st.success('Tidak ada permintaan verifikasi berkas!')
 
 else:
     ver_container = st.container(border=True)
 
-    for username, row in df_umkm.iterrows():
+    for username, row in df_umkm_unver.iterrows():
         inner_container = ver_container.container(border=False)
         ver_cols = inner_container.columns([0.7, 1, 1, 1, 0.7])
 
@@ -127,3 +132,47 @@ else:
 
         inner_container.divider()
 
+st.write('### 📒 Daftar Data Status UMKM')
+
+df_status = fetch_data('umkm_verified').reset_index()
+stat_values = df_status.values
+
+if not len(df_status):
+    st.error('Tidak ada UMKM yang terdaftar!')
+
+else:
+    rows_total = (len(df_status) - 1) // 4 + 1
+    list_stats = [stat_values[i:i+4] for i in range(0, len(stat_values), 4)]
+
+    stat_container = st.container(border=True)
+
+    for i in range(rows_total):
+        inner_container = stat_container.container()
+        stat_cols = inner_container.columns(4, gap='medium', border=True)
+
+        for j, row in enumerate(list_stats[i]):
+            with stat_cols[j]:
+                if row[4] == 'Null':
+                    st.image(f'src/img/missing_logo.png')
+                else:
+                    st.image(row[4])
+
+                st.write(f'#### {row[3]}')
+                st.write(f'_Tipe UMKM: {row[5]}_')
+                st.write(f'_Pemilik UMKM: {row[7]}_')
+                st.write(f'_No. Telp: {row[9]}_')
+                st.write(f'_**Status: {row[11]}**_')
+                stat_pop = st.popover(f'_**Rubah Status**_')
+
+                with stat_pop:
+                    if row[11] == 'Aktif':
+                        if st.button('Tidak Aktif', key=f'but_stat{row[0]}'):
+                            umkm_status_change(row[0], False)
+                            st.cache_data.clear()
+                            st.rerun()
+                    else:
+                        if st.button('Aktif', key=f'but_stat{row[0]}'):
+                            umkm_status_change(row[0], True)
+                            st.cache_data.clear()
+                            st.rerun()
+                        

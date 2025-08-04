@@ -58,6 +58,16 @@ def fetch_data(table: str):
         case 'umkm_unverified':
             sql = 'SELECT * FROM umkm_identity WHERE verification=0'
 
+        case 'umkm_verified':
+            sql = 'SELECT * FROM umkm_identity WHERE verification=1'
+
+        # case 'status_umkm_new':
+        #     sql = """
+        #         SELECT * FROM umkm_status WHERE modified IN (
+        #         SELECT MAX(modified) FROM umkm_status GROUP BY umkm_username
+        #     )
+        #     """
+
         case _:
             raise KeyError(f'{table} tidak ditemukan di database')
     
@@ -96,7 +106,7 @@ def umkm_registration(data: tuple):
     sql = f"""
         INSERT INTO umkm_identity (
             username, email, password, umkm_name, logo, umkm_type,
-            description, owner_name, instagram, phone_number, verification
+            description, owner_name, instagram, phone_number
         ) VALUES {mod_data};
     """
 
@@ -105,12 +115,28 @@ def umkm_registration(data: tuple):
 def umkm_verification(username: str, status: bool):
     if status:
         sql = f"""
-            UPDATE umkm_identity SET verification=1 WHERE username="{username}";
+            UPDATE umkm_identity SET verification=1, status="Aktif"
+            WHERE username="{username}";
         """
-    
+
     else:
         sql = f"""
             DELETE FROM umkm_identity WHERE username="{username}";
         """
 
+    return execute_sql_query([sql])
+
+def umkm_status_change(username: str, status: bool):
+    if status:
+        sql = f"""
+            UPDATE umkm_identity SET status="Aktif"
+            WHERE username="{username}"; 
+        """
+    
+    else:
+        sql = f"""
+            UPDATE umkm_identity SET status="Tidak Aktif"
+            WHERE username="{username}"; 
+        """
+    
     return execute_sql_query([sql])
