@@ -5,8 +5,8 @@ import streamlit as st
 
 # Custom package imports
 from modules import (
-    page_init, fetch_data_filter, fetch_data, check_umkm_state, umkm_update,
-    insert_category, insert_product
+    page_init, fetch_data_filter, check_umkm_state, umkm_update,
+    insert_category, insert_product, delete_product, delete_category
 )
 import pandas as pd
 
@@ -235,6 +235,7 @@ with cat_regis_popover:
     if st.button('Daftarkan'):
         if new_category:
             insert_category(username, new_category)
+            st.cache_data.clear()
             st.rerun()
 
 category_container = st.container(border=True)
@@ -275,13 +276,23 @@ else:
                 if st.button('Daftarkan', key=f'{cat_name}_ins_but'):
                     if product_name:
                         insert_product(data)
+                        st.cache_data.clear()
                         st.rerun()
 
             del_product_pop = inner_cat_cols[2].popover(
                 '**× Hapus Kategori Produk**', use_container_width=True
             )
+
+            with del_product_pop:
+                st.write('Proses ini akan menghapus semua produk dalam kategori')
+
+                if st.button('Hapus Kategori', key=f'del_{cat_name}_but'):
+                    print(delete_category(i))
+                    st.cache_data.clear()
+                    st.rerun()
             
-            df_product = fetch_data_filter('product', i)
+            df_product = fetch_data_filter('product', i).reset_index()
+            prod_values = df_product.values
             
             if not len(df_product):
                 st.error('Tidak ada produk yang terdaftar!')
@@ -289,21 +300,29 @@ else:
             else:
                 product_container = st.container()
 
-                for j, prod in df_product.iterrows():
-                    prod_cols = st.columns([0.5, 3, 1], gap='large')
+                rows_total = (len(df_product) - 1) // 4 + 1
+                list_prod = [prod_values[i:i+4] for i in range(0, len(prod_values), 4)]
 
-                    with prod_cols[0]:
-                        if prod.image == 'Null':
-                            st.image(f'src/img/missing_logo.png')
-                        else:
-                            st.image(prod.logo)
+                prod_container = st.container()
 
-                    with prod_cols[1]:
-                        st.write(f'#### {prod['name']}')
-                        st.write(f'{prod.description}')
-                        st.write(f'Rp{prod.price}')
+                for i in range(rows_total):
+                    inner_container = prod_container.container()
+                    prod_cols = inner_container.columns(4, gap='medium', border=True)
 
-                    with prod_cols[2]:
-                        st.button('Hapus Produk', key=f'del_prod_{prod['name']}')
+                    for j, row in enumerate(list_prod[i]):
+                        with prod_cols[j]:
+                            if row[5] == 'Null':
+                                st.image(f'src/img/missing_product.png')
+                            else:
+                                st.image(row.logo)
 
-                    st.divider()
+                            st.write(f'#### {row[2]}')
+                            st.write(f'{row[3]}')
+                            st.write(f'Rp{row[4]}')
+
+                            if st.button('**× Hapus Produk**', key=f'del_prod_{row[2]}'):
+                                delete_product(row[0])
+                                st.cache_data.clear()
+                                st.rerun()
+            
+            st.divider()

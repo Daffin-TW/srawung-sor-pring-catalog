@@ -199,6 +199,19 @@ def insert_category(username: str, category: str):
     
     return execute_sql_query([sql])
 
+def delete_category(category_id: int):
+    sql = []
+
+    sql.append(f"""
+        DELETE FROM product WHERE category_id='{category_id}';
+    """)
+
+    sql.append(f"""
+        DELETE FROM product_category WHERE id='{category_id}';
+    """)
+
+    return execute_sql_query(sql)
+
 def insert_product(data: tuple):
     mod_data = tuple(map(lambda x: 'Null' if not x else x, data))
 
@@ -206,6 +219,13 @@ def insert_product(data: tuple):
         INSERT INTO product (
             category_id, `name`, `description`, price, image
         ) VALUES {mod_data};
+    """
+    
+    return execute_sql_query([sql])
+
+def delete_product(product_id: int):
+    sql = f"""
+        DELETE FROM product WHERE id='{product_id}';
     """
     
     return execute_sql_query([sql])
