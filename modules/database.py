@@ -74,6 +74,12 @@ def fetch_data_filter(table: str, filter_: str):
         case 'umkm_credentials':
             sql = f"SELECT * FROM umkm_identity WHERE NOT username='{filter_}'"
 
+        case 'category':
+            sql = f"SELECT * FROM product_category WHERE umkm_username='{filter_}'"
+
+        case 'product':
+            sql = f"SELECT * FROM product WHERE category_id='{filter_}'"
+
         case _:
             raise KeyError(f'{table} tidak ditemukan di database')
     
@@ -184,3 +190,22 @@ def umkm_update(table: str, username: str, data: tuple):
             raise KeyError(f'{table} tidak ditemukan di database')
 
     return execute_sql_query(sql)
+
+def insert_category(username: str, category: str):
+    sql = f"""
+        INSERT INTO product_category (umkm_username, name) VALUES
+        ('{username}', '{category}');
+    """
+    
+    return execute_sql_query([sql])
+
+def insert_product(data: tuple):
+    mod_data = tuple(map(lambda x: 'Null' if not x else x, data))
+
+    sql = f"""
+        INSERT INTO product (
+            category_id, `name`, `description`, price, image
+        ) VALUES {mod_data};
+    """
+    
+    return execute_sql_query([sql])

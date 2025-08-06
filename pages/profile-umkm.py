@@ -5,7 +5,8 @@ import streamlit as st
 
 # Custom package imports
 from modules import (
-    page_init, fetch_data_filter, fetch_data, check_umkm_state, umkm_update
+    page_init, fetch_data_filter, fetch_data, check_umkm_state, umkm_update,
+    insert_category, insert_product
 )
 import pandas as pd
 
@@ -217,3 +218,92 @@ if id_button_cols[2].button('Rubah Username'):
 
 if id_button_cols[3].button('Rubah Password'):
     edit_password(df_umkm)
+
+cat_cols = st.columns([3, 0.5])
+cat_cols[0].write('### 🏷️ Produk UMKM')
+cat_regis_popover = cat_cols[1].popover(
+    '**✚ Daftarkan Kategori Baru**', use_container_width=True
+)
+
+df_category = fetch_data_filter('category', username)
+
+with cat_regis_popover:
+    new_category = st.text_input(
+        'Nama Kategori', placeholder='Nama Kategori Produk', max_chars=30
+    )
+
+    if st.button('Daftarkan'):
+        if new_category:
+            insert_category(username, new_category)
+            st.rerun()
+
+category_container = st.container(border=True)
+
+if not len(df_category):
+    category_container.error('Tidak ada kategori produk yang terdaftar!')
+
+else:
+    with category_container:
+        for i, cat in df_category.iterrows():
+            cat_name = cat['name']
+
+            inner_cat_cols = st.columns([3, 1, 1])
+
+            inner_cat_cols[0].write(f'### Kategori {cat_name}')
+            
+            new_product_pop = inner_cat_cols[1].popover(
+                '**✚ Daftarkan Produk Baru**', use_container_width=True,
+            )
+
+            with new_product_pop:
+                product_img = st.file_uploader(
+                    '**Gambar Produk**', type=["png", "jpg", "jpeg"],
+                    key=f'{cat_name}_ins_img'
+                )
+                product_name = st.text_input(
+                    'Nama Produk', max_chars=30, key=f'{cat_name}_ins_name'
+                )
+                product_desc = st.text_area(
+                    'Deskripsi Produk', max_chars=100, key=f'{cat_name}_ins_desc'
+                )
+                product_price = st.number_input(
+                    'Harga Produk', key=f'{cat_name}_ins_pri'
+                )
+
+                data = (i, product_name, product_desc, product_price, product_img)
+
+                if st.button('Daftarkan', key=f'{cat_name}_ins_but'):
+                    if product_name:
+                        insert_product(data)
+                        st.rerun()
+
+            del_product_pop = inner_cat_cols[2].popover(
+                '**× Hapus Kategori Produk**', use_container_width=True
+            )
+            
+            df_product = fetch_data_filter('product', i)
+            
+            if not len(df_product):
+                st.error('Tidak ada produk yang terdaftar!')
+            
+            else:
+                product_container = st.container()
+
+                for j, prod in df_product.iterrows():
+                    prod_cols = st.columns([0.5, 3, 1], gap='large')
+
+                    with prod_cols[0]:
+                        if prod.image == 'Null':
+                            st.image(f'src/img/missing_logo.png')
+                        else:
+                            st.image(prod.logo)
+
+                    with prod_cols[1]:
+                        st.write(f'#### {prod['name']}')
+                        st.write(f'{prod.description}')
+                        st.write(f'Rp{prod.price}')
+
+                    with prod_cols[2]:
+                        st.button('Hapus Produk', key=f'del_prod_{prod['name']}')
+
+                    st.divider()
