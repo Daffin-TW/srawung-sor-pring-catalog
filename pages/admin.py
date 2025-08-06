@@ -5,10 +5,9 @@ import streamlit as st
 
 # Custom package imports
 from modules import (
-    page_init, admin_state, fetch_data, umkm_verification, umkm_status_change
+    page_init, check_admin_state, fetch_data,
+    umkm_verification, umkm_status_change
 )
-import pandas as pd
-import numpy as np
 
 
 @st.dialog('Apakah anda yakin?', width='large')
@@ -47,7 +46,7 @@ current_page = 'admin'
 page_init.init_configuration(layout='wide')
 page_init.init_style()
 
-if not admin_state.check_admin_state():
+if not check_admin_state():
     st.switch_page('pages/admin-login.py')
 
 with st.sidebar:

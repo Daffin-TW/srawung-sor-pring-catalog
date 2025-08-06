@@ -3,7 +3,7 @@ from streamlit import session_state as ss
 import streamlit as st
 
 # Custom package imports
-from modules import page_init
+from modules import page_init, fetch_data, check_umkm_state
 
 
 # Initial
@@ -11,6 +11,9 @@ current_page = 'login'
 
 page_init.init_configuration(layout='centered')
 page_init.init_style()
+
+if check_umkm_state():
+    st.switch_page('pages/profile-umkm.py')
 
 with st.sidebar:
     st.title("Srawung Sor Pring")
@@ -42,11 +45,30 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# UMKM Credentials
+df_cred = fetch_data('umkm')
 
 with st.form("login_form", clear_on_submit=False):
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
-    submitted = st.form_submit_button("Login")
+
+    if st.form_submit_button("Login"):
+        try:
+            cred_pass = df_cred.loc[username].password
+            verification = df_cred.loc[username].verification
+
+            if not verification:
+                st.error('Akun belum diverifikasi, mohon tunggu Admin untuk verifikasi berkas!')
+
+            elif password == cred_pass:
+                ss.umkm_state = username
+                st.switch_page('pages/profile-umkm.py')
+        
+            else:
+                st.error('Username tidak ditemukan / Password tidak cocok')
+        
+        except KeyError as e:
+            st.error('Username tidak ditemukan / Password tidak cocok')
 
 st.markdown("""
     <div style='margin-top: 20px; text-align: center;'>
