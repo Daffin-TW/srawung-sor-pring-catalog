@@ -69,10 +69,10 @@ def fetch_data(table: str):
 def fetch_data_filter(table: str, filter_: str):
     match table:
         case 'umkm':
-            sql = f'SELECT * FROM umkm_identity WHERE username="{filter_}"'
+            sql = f"SELECT * FROM umkm_identity WHERE username='{filter_}'"
         
         case 'umkm_credentials':
-            sql = f'SELECT * FROM umkm_identity WHERE NOT username="{filter_}"'
+            sql = f"SELECT * FROM umkm_identity WHERE NOT username='{filter_}'"
 
         case _:
             raise KeyError(f'{table} tidak ditemukan di database')
@@ -121,13 +121,13 @@ def umkm_registration(data: tuple):
 def umkm_verification(username: str, status: bool):
     if status:
         sql = f"""
-            UPDATE umkm_identity SET verification=1, status="Aktif"
-            WHERE username="{username}";
+            UPDATE umkm_identity SET verification=1, status='Aktif'
+            WHERE username='{username}';
         """
 
     else:
         sql = f"""
-            DELETE FROM umkm_identity WHERE username="{username}";
+            DELETE FROM umkm_identity WHERE username='{username}';
         """
 
     return execute_sql_query([sql])
@@ -135,14 +135,14 @@ def umkm_verification(username: str, status: bool):
 def umkm_status_change(username: str, status: bool):
     if status:
         sql = f"""
-            UPDATE umkm_identity SET status="Aktif"
-            WHERE username="{username}"; 
+            UPDATE umkm_identity SET status='Aktif'
+            WHERE username='{username}';
         """
     
     else:
         sql = f"""
-            UPDATE umkm_identity SET status="Tidak Aktif"
-            WHERE username="{username}"; 
+            UPDATE umkm_identity SET status='Tidak Aktif'
+            WHERE username='{username}';
         """
     
     return execute_sql_query([sql])
@@ -155,29 +155,29 @@ def umkm_update(table: str, username: str, data: tuple):
         case 'information':
             sql.append(f"""
                 UPDATE umkm_identity SET
-                    umkm_name="{mod_data[0]}",
-                    logo="{mod_data[1]}",
-                    umkm_type="{mod_data[2]}",
-                    description="{mod_data[3]}",
-                    owner_name="{mod_data[4]}",
-                    instagram="{mod_data[5]}",
-                    phone_number="{mod_data[6]}"
-                WHERE username="{username}"; 
+                    umkm_name='{mod_data[0]}',
+                    logo='{mod_data[1]}',
+                    umkm_type='{mod_data[2]}',
+                    description='{mod_data[3]}',
+                    owner_name='{mod_data[4]}',
+                    instagram='{mod_data[5]}',
+                    phone_number='{mod_data[6]}'
+                WHERE username='{username}'; 
             """)
 
         case 'username':
             sql.append(f"""
                 UPDATE umkm_identity SET
-                    username="{mod_data[0]}",
-                    email="{mod_data[1]}"
+                    username='{mod_data[0]}',
+                    email='{mod_data[1]}'
                 WHERE username="{username}";
             """)
 
         case 'password':
             sql.append(f"""
                 UPDATE umkm_identity SET
-                    password="{mod_data[0]}"
-                WHERE username="{username}";
+                    password='{mod_data[0]}'
+                WHERE username='{username}';
             """)
 
         case _:

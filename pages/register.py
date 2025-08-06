@@ -83,7 +83,10 @@ with st.form("register_form", clear_on_submit=False):
             st.toast(msg, icon='⚠️')
 
         elif condition:
-            if umkm_registration(data):
+            result = umkm_registration(data)
+            print(result)
+            
+            if result:
                 msg = 'Registrasi berhasil! Silakan tunggu verifikasi admin'
                 st.success(msg)
                 st.toast(msg,  icon='✅')
