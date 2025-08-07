@@ -208,7 +208,7 @@ with id_cols[3]:
     st.write(f'Instagram: {df_umkm.instagram}')
     st.write(f'No. Telp: {df_umkm.phone_number}')
 
-id_button_cols = identity_container.columns([2.5, 0.5, 0.5, 0.5])
+id_button_cols = identity_container.columns([2, 0.5, 0.5, 0.5])
 
 if id_button_cols[1].button('Rubah Informasi'):
     profile_editing(df_umkm)
@@ -219,7 +219,7 @@ if id_button_cols[2].button('Rubah Username'):
 if id_button_cols[3].button('Rubah Password'):
     edit_password(df_umkm)
 
-cat_cols = st.columns([3, 0.5])
+cat_cols = st.columns([3, 1])
 cat_cols[0].write('### 🏷️ Produk UMKM')
 cat_regis_popover = cat_cols[1].popover(
     '**✚ Daftarkan Kategori Baru**', use_container_width=True
@@ -248,7 +248,7 @@ else:
         for i, cat in df_category.iterrows():
             cat_name = cat['name']
 
-            inner_cat_cols = st.columns([3, 1, 1])
+            inner_cat_cols = st.columns([2, 1, 1])
 
             inner_cat_cols[0].write(f'### Kategori {cat_name}')
             
@@ -284,7 +284,7 @@ else:
             )
 
             with del_product_pop:
-                st.write('Proses ini akan menghapus semua produk dalam kategori')
+                st.error('Proses ini akan menghapus semua produk dalam kategori')
 
                 if st.button('Hapus Kategori', key=f'del_{cat_name}_but'):
                     print(delete_category(i))
@@ -298,8 +298,6 @@ else:
                 st.error('Tidak ada produk yang terdaftar!')
             
             else:
-                product_container = st.container()
-
                 rows_total = (len(df_product) - 1) // 4 + 1
                 list_prod = [prod_values[i:i+4] for i in range(0, len(prod_values), 4)]
 

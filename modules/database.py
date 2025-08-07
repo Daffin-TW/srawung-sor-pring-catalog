@@ -61,6 +61,9 @@ def fetch_data(table: str):
         case 'umkm_verified':
             sql = 'SELECT * FROM umkm_identity WHERE verification=1'
 
+        case 'umkm_status':
+            sql = "SELECT * FROM umkm_identity WHERE status='Aktif'"
+
         case _:
             raise KeyError(f'{table} tidak ditemukan di database')
     
