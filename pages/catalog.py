@@ -82,7 +82,7 @@ for i, row in df_umkm.iterrows():
 
         with umkm_cols1[0]:
             if row.logo == 'Null':
-                st.image(f'src/img/missing_product.png')
+                st.image(f'src/img/missing_logo.png')
             else:
                 st.image(row.logo)
 
