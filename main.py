@@ -86,33 +86,11 @@ with col2:
 
 st.divider()
 
-# UMKM Pilihan Hari Ini
-# Load data
-df = pd.read_csv("src/data/umkm.csv", delimiter=';')
-
-# Ambil UMKM secara acak
-sample_umkm = df.sample(n=min(3, len(df)))
-
-# Tampilkan judul mini katalog
-st.markdown("### 🛍️ UMKM Pilihan Hari Ini!")
-
-# Tampilkan 3 kolom
-cols = st.columns(3)
-
-index = 0
-for i, row in sample_umkm.iterrows():
-    col = cols[index]
-    index += 1
-
-    with col:
-        umkm_anchor = row['nama_umkm'].replace(" ", "-")
-        st.markdown(f"""
-        <div class="umkm-card">
-            <iframe src="{row['logo']}" class="umkm-logo" allow="autoplay"></iframe>
-            <h4>{row['nama_umkm']}</h4>
-            <p style="font-size: 13px;"><i>{row['jenis_umkm']}</i> · Shift {row['shift']}</p>
-        </div>
-        """, unsafe_allow_html=True)
+cat_cols = st.columns([2, 1])
+cat_cols[0].markdown('### 🛒 Akses Katalog UMKM Srawung Sor Pring')
+if cat_cols[1].button('**🏷️ Katalog UMKM**'):
+    ss.navigation = '🛒 Katalog'
+    st.rerun()
 
 st.divider()
 
