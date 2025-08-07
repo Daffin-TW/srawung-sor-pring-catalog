@@ -46,6 +46,8 @@ def profile_editing(data: pd.DataFrame):
 
         submit = st.form_submit_button("Simpan Perubahan")
 
+        logo_umkm = ''  # Image upload incompatibility
+
         data = (
             nama_umkm, logo_umkm, tipe_umkm,
             deskripsi, nama_pemilik, instagram, no_telepon

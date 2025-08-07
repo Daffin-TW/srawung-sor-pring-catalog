@@ -64,6 +64,8 @@ with st.form("register_form", clear_on_submit=False):
 
     submit = st.form_submit_button("Daftar Sekarang")
 
+    logo_umkm = ''  # Image upload incompatibility
+
     data = (
         username, email, password, nama_umkm, logo_umkm, tipe_umkm,
         deskripsi, nama_pemilik, instagram, no_telepon
