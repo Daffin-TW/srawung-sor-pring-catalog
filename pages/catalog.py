@@ -81,7 +81,7 @@ for i, row in df_umkm.iterrows():
         umkm_cols1 = st.columns([0.4, 2], vertical_alignment='center')
 
         with umkm_cols1[0]:
-            if row.image == 'Null':
+            if row.logo == 'Null':
                 st.image(f'src/img/missing_product.png')
             else:
                 st.image(row.logo)
