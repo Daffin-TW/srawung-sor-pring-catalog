@@ -302,7 +302,7 @@ The application will open automatically in your default browser at `http://local
 This project was conceived and built as part of the **Community Service Program (Kuliah Kerja Nyata / KKN) Group 139 - Arundiswara** in Keputih, Sukolilo, Surabaya. The program focuses on grassroots economic empowerment by introducing digital infrastructure to traditional community markets and promoting local MSMEs to a wider public audience.
 
 ### Maintainers & Contributors
-- **Lead Developer**: [Daffin_TW](https://github.com/DaffinTW)
+- **Lead Developer**: [Daffin_TW](https://github.com/Daffin-TW)
 - **Initiative Team**: Student Members of KKN 139 Arundiswara
 
 ---
